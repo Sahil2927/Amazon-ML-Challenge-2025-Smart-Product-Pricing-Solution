@@ -12,13 +12,13 @@ Competition Platform: Unstop
 Submission Date: October 13, 2025
 Rank: Under 1000 among 82000 teams 
 
-📌 Problem Statement
+Problem Statement
 
 Predict product prices accurately using multimodal data (text + images) for Amazon-like product listings.
 The evaluation metric is SMAPE, emphasizing robustness across low-, medium-, and high-priced products.
 
 
-🚀 Executive Summary
+Executive Summary
 
 We propose a multimodal deep learning solution that fuses textual, visual, and engineered features to predict product prices.
 Our final system uses:
@@ -27,14 +27,14 @@ Our final system uses:
 3. A 5-layer feed-forward neural network
 4. A custom SMAPE-optimized hybrid loss function
 
-🏆 Final Result
+Final Result
 
 1. Cross-Validation SMAPE: 48.40
 2. Relative improvement: ~11% over baseline
 3. Low fold variance: ±0.30 → stable generalization
 
-🧩 Methodology Overview
-🔍 Key Data Observations
+Methodology Overview
+Key Data Observations
 
 1. Price range: $0.13 – $2,796 → log transformation required
 2. ~38% products priced below $10 → needs weighted learning
@@ -42,7 +42,7 @@ Our final system uses:
 4. Premium keywords (organic, imported, artisan) matter
 5. Category-based price tiers exist (wine, cheese vs water, powder)
 
-🏗️ System Architecture
+System Architecture
 
 Input Features (220)
 │
@@ -70,7 +70,7 @@ FC Layers (384 → 256 → 128 → 64 → 32)
 Output: Price Prediction
 
 
-🧠 Feature Engineering
+Feature Engineering
 1️⃣ Size & Quantity Features (Most Important)
 a. Unit-normalized size (oz)
 b. Pack count detection
@@ -95,14 +95,14 @@ c. brand × category
 d. image × text embeddings
 
 
-🖼️ Image Processing Pipeline
+Image Processing Pipeline
 1. Image download with retry & backoff
 2. Resize → 224×224
 3. Pretrained ResNet50 (no classifier)
 4. PCA: 2048 → 65 dimensions
 5. Missing/broken images → zero vector fallback
 
-🏋️ Model Training
+Model Training
 🔧 Optimization Setup
 1. Optimizer: AdamW
 2. Learning Rate: 0.0008
@@ -114,7 +114,7 @@ d. image × text embeddings
 8. Target Transform: log1p(price)
 
 
-📐 Custom Loss Function (Core Innovation)
+Custom Loss Function (Core Innovation)
 Total Loss =
 0.20 × Weighted MSE
 + 0.20 × Huber Loss
@@ -125,8 +125,7 @@ Why?
 2. Handles outliers
 3. Emphasizes low-price accuracy
 
-
-📊 Model Performance
+Model Performance
 Overall Metrics
 Metric	Value
 SMAPE	  48.40
@@ -142,7 +141,7 @@ $10–$20	      33.98	  $4.82	  26%
 $20–$50	      50.36	  $12.25	  25%
 >$50	        67.04	  $45.17	  11%
 
-🧪 Ablation Study
+Ablation Study
 Removed Component	    SMAPE
 Full Model	          48.40
 – Size Features	      53.50
@@ -151,24 +150,23 @@ Full Model	          48.40
 – Custom Loss	        51.10
 – Premium Features	  50.50
 
-📌 Key Insight:
-👉 Size & pack information is the strongest price signal.
+Key Insight:
+Size & pack information is the strongest price signal.
 
 
-⚠️ Challenges Faced
+Challenges Faced
 1. ❌ Transformer models rejected (API dependency)
 2. ❌ Regex-only extraction failed on inconsistent formats
 3. ⚠️ Image CDN throttling
 4. ⚠️ Category imbalance & rare expensive items
 
-✅ Solutions
+Solutions
 1. TF-IDF + SVD over transformers
 2. Manual rule-based extraction
 3. PCA + batch processing
 4. Bayesian smoothing & heavy regularization
 
-🔮 Future Improvements
-
+Future Improvements
 1. Attention-based feature weighting
 2. Price-bucketed models
 3. Category-specific experts
@@ -176,7 +174,7 @@ Full Model	          48.40
 5. Multi-task learning (price + category)
 6. Graph-based brand/category modeling
 
-🏁 Conclusion
+Conclusion
 This project demonstrates that careful feature engineering + metric-aware optimization can outperform heavier models.
 Our multimodal DNN achieves stable, competitive performance while remaining fully offline, reproducible, and efficient.
 
